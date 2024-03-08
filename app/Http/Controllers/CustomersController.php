@@ -12,7 +12,6 @@ class CustomersController extends Controller
      */
     public function index()
     {
-
         $customers = \App\Models\Customers::paginate(5);
 
         return view('screens.customers.index', compact('customers'))
@@ -41,7 +40,7 @@ class CustomersController extends Controller
             'address' => 'nullable',
             'dob' => 'required|date|before:-18 years',
         ]);
-// return $request->all();
+
         $customer = Customers::create($request->all());
         return redirect()->route('customers.index')->with('success', 'customer created successfully');
 
@@ -62,7 +61,6 @@ class CustomersController extends Controller
     {
 
         $customer = Customers::where('id', $id)->first();
-        //    return $customer;
         return view('screens.customers.edit', compact('customer'));
     }
 
@@ -72,7 +70,6 @@ class CustomersController extends Controller
     public function update(Request $request, Customers $customers, $id)
     {
         $customer = Customers::where('id', $id)->first();
-
         $customer->name = $request->name;
         $customer->email = $request->email;
         $customer->phone = $request->phone;
@@ -88,7 +85,6 @@ class CustomersController extends Controller
      */
     public function destroy(Customers $customers, $id)
     {
-
         Customers::where('id', $id)->delete();
         return redirect()->back()->with('error', 'customer deleted successfully');
     }
@@ -103,11 +99,9 @@ class CustomersController extends Controller
 
     public function restore($id)
     {
-       
         $customers = Customers::onlyTrashed()->where('id', $id)->first();
-
-        $customers->deleted_at = NULL;
-         $customers->save();
+        $customers->deleted_at = null;
+        $customers->save();
         return redirect()->back()->with('success', 'customer restore successfully');
 
     }

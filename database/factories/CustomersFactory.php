@@ -24,7 +24,7 @@ class CustomersFactory extends Factory
             'password' => Hash::make('password'),
             'address' => fake()->streetAddress,
             'dob' => fake()->dateTimeThisCentury->format('Y-m-d'),
-            'status' => true,
+            'status' =>  fake()->randomDigit([1,2]),
         ];
     }
 }
